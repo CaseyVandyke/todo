@@ -1,14 +1,25 @@
-import React from "react";
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import Chore from "./Chore";
+
+export const ChoreContext = React.createContext({});
 
 const TodoList = props => {
-  console.log(props);
+  const { chores } = props;
+
   return (
-    <div>
-      {props.chores.map((chore, i) => {
-        return <p key={i}>{chore.text}</p>;
-      })}
-    </div>
+    <Fragment>
+      {chores.map((chore, i) => (
+        <ChoreContext.Provider key={i} value={chore}>
+          <Chore />
+        </ChoreContext.Provider>
+      ))}
+    </Fragment>
   );
+};
+
+TodoList.propTypes = {
+  chores: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default TodoList;
